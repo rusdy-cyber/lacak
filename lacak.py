@@ -37,7 +37,7 @@ def get_districts(api_key, city_code):
         return None
 
 # Contoh penggunaan
-api_key = "AIzaSyDSlpanG00Fqrz-gWbieAoMOC5fOY3N2Yg"
+api_key = "AIzaSyDAyFihZxk6xl0U6GA_XGb3YmoXB_mg37U"
 
 # Mendapatkan daftar provinsi
 provinces = get_provinces(api_key)
