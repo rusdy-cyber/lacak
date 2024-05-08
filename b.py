@@ -1,6 +1,17 @@
 import requests
-import json
 
+def show_position(latitude, longitude, api_key):
+    location = get_location_from_coordinates(latitude, longitude, api_key)
+    if location:
+        print("Lokasi Anda:")
+        print("Negara:", location['country'])
+        print("Provinsi:", location['province'])
+        print("Kota:", location['city'])
+        print("Kabupaten/Kota:", location['district'])
+    else:
+        print("Gagal melacak lokasi.")
+
+# Fungsi ini hanya digunakan sebagai contoh dan perlu diimplementasikan sesuai dengan kebutuhan Anda.
 def get_location_from_coordinates(latitude, longitude, api_key):
     url = f"https://maps.googleapis.com/maps/api/geocode/json?latlng={latitude},{longitude}&key={api_key}"
     response = requests.get(url)
@@ -34,29 +45,9 @@ def get_location_from_coordinates(latitude, longitude, api_key):
         print(f"Error: {response.status_code} - {response.text}")
         return None
 
-# Contoh penggunaan
+# Contoh penggunaan (harus mengganti nilai-nilai ini sesuai dengan kebutuhan Anda)
 api_key = "AIzaSyC-yS1GkdRa9H_0kV96nlmMeJRTK72jOhs"
+latitude = 37.7749  # Contoh nilai latitude
+longitude = -122.4194  # Contoh nilai longitude
 
-def get_user_location():
-    if "geolocation" in navigator:
-        navigator.geolocation.getCurrentPosition(showPosition);
-    else {
-        alert("Geolocation is not supported by this browser.");
-    }
-    
-def showPosition(position) {
-    latitude = position.coords.latitude;
-    longitude = position.coords.longitude;
-    location = get_location_from_coordinates(latitude, longitude, api_key)
-    if location:
-        console.log("Lokasi Anda:")
-        console.log("Negara:", location['country'])
-        console.log("Provinsi:", location['province'])
-        console.log("Kota:", location['city'])
-        console.log("Kabupaten/Kota:", location['district'])
-    else:
-        console.log("Gagal melacak lokasi.")
-}
-
-# Panggil fungsi untuk mendapatkan lokasi pengguna
-get_user_location()
+show_position(latitude, longitude, api_key)
