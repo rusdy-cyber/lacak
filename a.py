@@ -34,7 +34,7 @@ def get_location_from_phone_number(phone_number, api_key):
         return None
 
 # Contoh penggunaan
-api_key = "AIzaSyDSlpanG00Fqrz-gWbieAoMOC5fOY3N2Yg"
+api_key = "AIzaSyC-yS1GkdRa9H_0kV96nlmMeJRTK72jOhs"
 
 phone_number = input("Masukkan nomor telepon Indonesia (contoh: +62811234567): ")
 
