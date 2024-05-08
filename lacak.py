@@ -1,43 +1,63 @@
 import requests
 
-def get_location_by_phone_number(phone_number):
-    # Masukkan kunci API Google Maps Geolocation Anda di sini
-    api_key = "YOUR_API_KEY"
+def get_provinces(api_key):
+    url = f"https://api.goapi.io/regional/provinsi?api_key={api_key}"
+    response = requests.get(url)
 
-    # URL untuk meminta lokasi berdasarkan nomor telepon
-    url = f"https://www.googleapis.com/geolocation/v1/geolocate?key={api_key}"
-
-    # Data yang akan dikirim ke API, termasuk nomor telepon
-    data = {
-        "considerIp": "false",
-        "wifiAccessPoints": [],
-        "cellTowers": [
-            {
-                "cellId": 123456,  # ID tower seluler
-                "locationAreaCode": 456,  # Kode area lokasi
-                "mobileCountryCode": 360,  # Kode negara seluler
-                "mobileNetworkCode": 1,  # Kode jaringan seluler
-                "age": 0,
-                "signalStrength": -60,  # Kekuatan sinyal
-                "timingAdvance": 15  # Kemajuan waktu
-            }
-        ]
-    }
-
-    # Mengirim permintaan POST ke API
-    response = requests.post(url, json=data)
-
-    # Memeriksa apakah permintaan berhasil
     if response.status_code == 200:
-        location = response.json()["location"]
-        return location
+        data = response.json()
+        provinces = data["data"]
+        return provinces
     else:
+        print(f"Error: {response.status_code} - {response.text}")
+        return None
+
+def get_cities(api_key, province_code):
+    url = f"https://api.goapi.io/regional/kota?api_key={api_key}&provinsi={province_code}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        cities = data["data"]
+        return cities
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+        return None
+
+def get_districts(api_key, city_code):
+    url = f"https://api.goapi.io/regional/kecamatan?api_key={api_key}&kota={city_code}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        districts = data["data"]
+        return districts
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
         return None
 
 # Contoh penggunaan
-phone_number = "081234567890"
-location = get_location_by_phone_number(phone_number)
-if location:
-    print(f"Lokasi perangkat dengan nomor {phone_number}: {location}")
-else:
-    print("Tidak dapat melacak lokasi perangkat.")
+api_key = "AIzaSyDSlpanG00Fqrz-gWbieAoMOC5fOY3N2Yg"
+
+# Mendapatkan daftar provinsi
+provinces = get_provinces(api_key)
+if provinces:
+    print("Daftar Provinsi:")
+    for province in provinces:
+        print(f"{province['id']} - {province['nama']}")
+
+# Mendapatkan daftar kota di provinsi tertentu
+province_code = "32"  # Kode provinsi Jawa Barat
+cities = get_cities(api_key, province_code)
+if cities:
+    print(f"\nDaftar Kota di Provinsi {province_code}:")
+    for city in cities:
+        print(f"{city['id']} - {city['nama']}")
+
+# Mendapatkan daftar kecamatan di kota tertentu
+city_code = "3276"  # Kode kota Bandung
+districts = get_districts(api_key, city_code)
+if districts:
+    print(f"\nDaftar Kecamatan di Kota {city_code}:")
+    for district in districts:
+        print(f"{district['id']} - {district['nama']}")
