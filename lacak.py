@@ -1,7 +1,7 @@
 import requests
 
 def get_provinces(api_key):
-    url = f"https://api.goapi.io/regional/provinsi?api_key={api_key}"
+    url = f"https://api.telkomsel.com/v1/location?api_key={api_key}"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -13,7 +13,7 @@ def get_provinces(api_key):
         return None
 
 def get_cities(api_key, province_code):
-    url = f"https://api.goapi.io/regional/kota?api_key={api_key}&provinsi={province_code}"
+    url = f"https://api.telkomsel.com/v1/location?api_key={api_key}&provinsi={province_code}"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -25,7 +25,7 @@ def get_cities(api_key, province_code):
         return None
 
 def get_districts(api_key, city_code):
-    url = f"https://api.goapi.io/regional/kecamatan?api_key={api_key}&kota={city_code}"
+    url = f"https://api.telkomsel.com/v1/location?api_key={api_key}&kota={city_code}"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -37,7 +37,7 @@ def get_districts(api_key, city_code):
         return None
 
 # Contoh penggunaan
-api_key = "AIzaSyDAyFihZxk6xl0U6GA_XGb3YmoXB_mg37U"
+api_key = "AIzaSyDSlpanG00Fqrz-gWbieAoMOC5fOY3N2Yg"
 
 # Mendapatkan daftar provinsi
 provinces = get_provinces(api_key)
